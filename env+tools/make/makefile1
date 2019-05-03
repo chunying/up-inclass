@@ -1,0 +1,15 @@
+
+CC	= gcc
+CXX	= g++
+CFLAGS	= -g -Wall
+LDFALGS	=
+
+all: hello
+
+hello: s1.c s2.c s3.c hello.c
+	gcc $(CFLAGS) -c s1.c
+	gcc $(CFLAGS) -c s2.c
+	gcc $(CFLAGS) -c s3.c
+	gcc $(CFLAGS) -c hello.c
+	gcc -o $@ s1.o s2.o s3.o hello.o $(LDFLAGS)
+
