@@ -24,14 +24,15 @@ void unblock(int sig, sigset_t *oldset) {
 }
 
 void *worker(void *arg) {
-	long sig = (long) arg;
+	long blksig = (long) arg;
 	sigset_t oldset;
 
-	block(sig, &oldset);
+	sigemptyset(&oldset);
+	block(blksig, &oldset);
 	printf("I am thread %lx, SIGUSR1 %sblocked.\n",
-		pthread_self(), sig ? "" : "not ");
+		pthread_self(), blksig ? "" : "not ");
 	while(1) { sleep(1); }
-	unblock(sig, &oldset);
+	unblock(blksig, &oldset);
 
 	return NULL;
 }
@@ -44,9 +45,9 @@ int main() {
 	signal(SIGUSR1, handler);
 
 	for(i = 0; i < 3; i++) {
-		long sig = (i == 1) ? 0 : SIGUSR1;
+		long blksig = (i == 1) ? 0 : SIGUSR1;
 
-		if(pthread_create(&tid[i], NULL, worker, (void*) sig) != 0) {
+		if(pthread_create(&tid[i], NULL, worker, (void*) blksig) != 0) {
 			fprintf(stderr, "pthread_create failed.\n");
 			return -1;
 		}
@@ -54,9 +55,7 @@ int main() {
 
 	block(SIGUSR1, &oldset);
 	printf("I am main-thread %lx.\n", pthread_self());
-
 	printf("Wait for SIGUSR1 ...\n");
-
 	for(i = 0; i < 3; i++)	// never ends ...
 		pthread_join(tid[i], NULL);
 

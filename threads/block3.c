@@ -46,7 +46,6 @@ int main() {
 	pthread_t tid[3];
 
 	signal(SIGUSR1, handler);
-	block(SIGUSR1, &oldset);
 
 	for(i = 0; i < 3; i++) {
 		if(pthread_create(&tid[i], NULL, worker, NULL) != 0) {
@@ -55,6 +54,7 @@ int main() {
 		}
 	}
 
+	block(SIGUSR1, &oldset);
 	printf("I am main-thread %lx.\n", pthread_self());
 	printf("Wait for SIGUSR1 ...\n");
 	for(i = 0; i < 3; i++)	// never ends ...

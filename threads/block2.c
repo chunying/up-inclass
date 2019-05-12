@@ -1,4 +1,4 @@
-/* One does not block SIGUSR1, and signals are handled by sigwait */
+/* All block SIGUSR1, and signals are handled by the one who called sigwait */
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
@@ -24,20 +24,18 @@ void unblock(int sig, sigset_t *oldset) {
 }
 
 void *worker(void *arg) {
-	long sig = (long) arg;
+	long blksig = (long) arg;
 	sigset_t set;
 
-	printf("I am thread %lx, SIGUSR1 %sblocked.\n",
-		pthread_self(), sig ? "" : "not ");
+	printf("I am thread %lx, sigwait(SIGUSR1) is %scalled.\n",
+		pthread_self(), blksig ? "not " : "");
 
-	if(sig == 0) {
-		sigemptyset(&set);
-		sigaddset(&set, SIGUSR1);
-	}
+	sigemptyset(&set);
+	sigaddset(&set, SIGUSR1);
 
 	while(1) { 
-		if(sig) {
-			sleep(1);
+		if(blksig) {
+			pause();
 		} else {
 			int s;
 			sigwait(&set, &s);
@@ -57,9 +55,9 @@ int main() {
 	block(SIGUSR1, &oldset);
 
 	for(i = 0; i < 3; i++) {
-		long sig = (i == 1) ? 0 : SIGUSR1;
+		long blksig = (i == 1) ? 0 : SIGUSR1;
 
-		if(pthread_create(&tid[i], NULL, worker, (void*) sig) != 0) {
+		if(pthread_create(&tid[i], NULL, worker, (void*) blksig) != 0) {
 			fprintf(stderr, "pthread_create failed.\n");
 			return -1;
 		}
