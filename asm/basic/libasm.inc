@@ -8,4 +8,5 @@ extern asm_write_str
 extern _asm_write_str
 
 extern asm_dump_regs
+extern _asm_dump_regs
 extern asm_write

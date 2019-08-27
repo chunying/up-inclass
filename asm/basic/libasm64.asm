@@ -116,7 +116,7 @@ _asm_write_hex:
 
 	section .data
 dump_regs_text	db	"RAX=RBX=RCX=RDX=RSI=RDI=RSP=RBP= R8= R9=R10=R11=R12=R13=R14=R15=FLG=", 0
-dump_regs_off	dq	104, 96, 88, 80, 72, 64, 120, 112
+dump_regs_off	dq	112, 104, 96, 88, 80, 72, 64, 128, 120 ;104, 96, 88, 80, 72, 64, 120, 112
 		dq	56, 48, 40, 32, 24, 16, 8, 0
 
 	section .text
@@ -191,6 +191,10 @@ asm_dump_regs:
 	pop	rbp
 	pop	rsp
 	ret
+
+	global _asm_dump_regs
+_asm_dump_regs:
+	jmp	asm_dump_regs
 
 ;;;;;;;; syscalls demo
 

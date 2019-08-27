@@ -8,7 +8,7 @@ ASM64	= yasm -f elf64 -DYASM -D__x86_64__ -DPIC
 
 CFLAGS	= -g -Wall -masm=intel -fno-stack-protector
 
-PROGS	= fun1 fun2 hello_sys hello_libc2 swap swap1 swap2 swap3 \
+PROGS	= fun1 fun2 hello_sys hello_libc2 swap swap1 swap2 swap3 minimal \
 	  dup2 frame_x64 frame_x86 conv_x86 conv_x86.s \
 	  hello_x86 hello_x64 libme.so callext \
 	  libasm64.a testasm_x64 testlink_x64 \
@@ -52,6 +52,10 @@ all: $(PROGS)
 
 %: %.cc
 	$(CXX) -o $@ $(CFLAGS) $<
+
+minimal: minimal.asm
+	$(ASM64) $< -o $@.o
+	ld -m elf_x86_64 -o $@ $@.o
 
 swap: swap.c
 	$(CC) -o $@ $(CFLAGS) $<
