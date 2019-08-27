@@ -11,7 +11,7 @@ uid_t getuid(void) {
 			old_getuid = dlsym(handle, "getuid");
 		}
 	}
-	fprintf(stderr, "injected getuid, always return 0\n");
+	fprintf(stderr, "injected getuid, always return 0 (%s)\n", __FILE__);
 	if(old_getuid != NULL) {
 		fprintf(stderr, "real uid = %d\n", old_getuid());
 	}

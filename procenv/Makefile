@@ -10,7 +10,7 @@ ifeq ($(SYS),FreeBSD)
 LDL	=
 endif
 
-PROGS	= guess h1 getuid inject1.so inject2.so inject3.so random.so segment setjmp
+PROGS	= guess h1 getuid inject1.so inject2.so inject3.so random.so segment setjmp libc_dlopen find_dlopen
 
 ifneq ($(SYS),Darwin)	# apple does not support static linkage ...
 PROGS	+= h2 getuid_s
@@ -24,6 +24,9 @@ h2: h2.c
 guess: guess.c
 	$(CC) -o $@ $(CFLAGS) $< $(LDFLAGS) 
 	objdump -D guess -M intel > guess.s
+
+find_dlopen: find_dlopen.c
+	$(CC) -o $@ $(CFLAGS) $< $(LDFLAGS) $(LDL)
 
 %.so: %.c
 	$(CC) -o $@ -shared -fPIC $^ $(LDL)
