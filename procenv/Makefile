@@ -52,5 +52,5 @@ segment: segment.c
 	$(CXX) -o $@ $(CFLAGS) $< $(LDFLAGS)
 
 clean:
-	rm -f *~ $(PROGS)
+	rm -f *~ guess.s $(PROGS)
 
