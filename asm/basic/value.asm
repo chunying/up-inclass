@@ -37,7 +37,7 @@ q	resb	32
 r	resw	64
 s	rest	128
 
-	section .code
+	section .text
 
 _start:	mov	rax, 60		; exit(87)
 	mov	rdi, 87

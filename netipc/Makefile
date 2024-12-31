@@ -12,8 +12,10 @@ endif
 PROGS	= addr \
 	  gethostent getprotoent getservent \
 	  getaddrinfo getnameinfo echosrv \
+	  unix_ss unix_sc unix_ds unix_dc \
 	  raw_icmp raw_ip raw_packet \
-	  raw_sping1 raw_sping2 raw_sping3
+	  raw_sping1 raw_sping2 raw_sping3 \
+	  ping
 
 all: $(PROGS)
 

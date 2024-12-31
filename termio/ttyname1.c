@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/sysmacros.h>
 
 #define	err_sys(m) { perror(m); exit(-1); }
 

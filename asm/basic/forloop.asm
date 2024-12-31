@@ -4,7 +4,7 @@
 i:	dd	0
 digit:	db	'0', 0x0a
 
-	section .code
+	section .text
 
 _start:
 	mov	DWORD [i], 0

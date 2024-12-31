@@ -4,7 +4,7 @@
 hello:	db	"hello, world!", 0x0a
 mlen:	equ	$-hello
 
-	section .code
+	section .text
 _start:
 	mov	rax, 1		; syscall:write
 	mov	rdi, 1		; rdi (fd)

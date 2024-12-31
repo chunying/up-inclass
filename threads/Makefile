@@ -21,11 +21,11 @@ all: $(PROGS)
 %: %.cpp
 	$(CXX) -o $@ $(CFLAGS) $< $(LDFLAGS)
 
-%.o: $.c
-	$(CC) -c $@ $(CFLAGS) $<
+%.o: %.c
+	$(CC) -c $(CFLAGS) $<
 
-%.o: $.cpp
-	$(CXX) -c $@ $(CFLAGS) $<
+%.o: %.cpp
+	$(CXX) -c $(CFLAGS) $<
 
 barrier_off: barrier.c
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $<

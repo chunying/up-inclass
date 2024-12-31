@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdint.h>
 
 void hexdump(unsigned char *s, int len) {
 	int i, j;
@@ -22,7 +23,7 @@ void hexdump(unsigned char *s, int len) {
 
 // Ref: http://www.faqs.org/rfcs/rfc1071.html
 unsigned short cksum(unsigned char *data, int len) {
-	long sum = 0;  /* assume 32 bit long, 16 bit short */
+	uint32_t sum = 0;  /* assume 32 bit long, 16 bit short */
 
 	while(len > 1) {
 		sum += *((unsigned short*) data);

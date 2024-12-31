@@ -5,25 +5,22 @@
 #include <unistd.h>
 
 int main() {
-	struct {
-		char buf[16];
-		int answer;
-	} d;
+	char buf[16];
+	int answer;
 
 	setvbuf(stdout, NULL, _IONBF, 0);
 	srand(time(0) ^ getpid());
-
-	d.answer = rand() % 10000;
+	answer = rand() % 10000;
 
 	printf("Guess the number: ");
-	if(fgets(d.buf, 20, stdin) != NULL) {
-		int g = strtol(d.buf, NULL, 0);
-		printf("Your guess is %d\n", g);
-		if(g == d.answer) {
-			printf("Bingo!\n");
-		} else {
-			printf("No no no ...\n");
-		}
+	if(fgets(buf, 32, stdin) != NULL) {
+			int g = strtol(buf, NULL, 0);
+			printf("Your guess is %d\n", g);
+			if(g == answer) {
+					printf("Bingo!\n");
+			} else {
+					printf("No no no ...\n");
+			}
 	}
 
 	return 0;

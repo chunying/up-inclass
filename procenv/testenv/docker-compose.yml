@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  main:
+    build: .
+    restart: unless-stopped
+    environment:
+      - EDITOR=vim
+    volumes:
+      - ./data:/home/chuang
+    networks:
+        default:
+        internal:
+
+networks:
+    default:
+    internal:
+        internal: true
+

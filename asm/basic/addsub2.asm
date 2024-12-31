@@ -9,7 +9,7 @@ val3	dd	0x20000
 final	resd	1
 
 	global _start:function
-	section .code
+	section .text
 _start:
 	mov	eax, [val1]
 	add	eax, [val2]

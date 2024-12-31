@@ -5,7 +5,7 @@ a:	dw	11
 b:	dw	22
 c:	dw	0
 
-	section .code
+	section .text
 
 _start:
 	; if (a > 1 and b > 2) { c = 10 } else { c = 20 }

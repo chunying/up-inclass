@@ -1,7 +1,7 @@
 	%include "libasm.inc"
 
 	global _start:function
-	section .code
+	section .text
 _start:
 	mov	eax, 0x10000
 	add	eax, 0x40000

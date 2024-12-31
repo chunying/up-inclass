@@ -10,7 +10,7 @@
 void output(const char *prefix, char *encrypted, int saltlen) {
 	if(encrypted == NULL)
 		printf("%7s: Not available\n", prefix);
-	printf("%7s: %2d %s\n", prefix, strlen(encrypted) - saltlen, encrypted);
+	printf("%7s: %2zd %s\n", prefix, strlen(encrypted) - saltlen, encrypted);
 	return;
 }
 
@@ -64,10 +64,10 @@ main(int argc, char *argv[]) {
 	strcat(s_sha256, "$");
 	strcat(s_sha512, "$");
 
-	p_des = strdup(crypt(p, s_des));
-	p_md5 = strdup(crypt(p, s_md5));
-	p_sha256 = strdup(crypt(p, s_sha256));
-	p_sha512 = strdup(crypt(p, s_sha512));
+	p_des = strdup(crypt(p, s_des) ? : "<DES failed>");
+	p_md5 = strdup(crypt(p, s_md5) ? : "<MD5 failed>");
+	p_sha256 = strdup(crypt(p, s_sha256) ? : "<SHA256 failed>");
+	p_sha512 = strdup(crypt(p, s_sha512) ? : "<SHA512 failed>");
 
 	output("DES", p_des, 2);
 	output("MD5", p_md5, 12);

@@ -4,7 +4,7 @@
 msg:	db	"a string", 0x0a, 0x00
 a:	db	0x01
 
-	section .code
+	section .text
 
 _start:
 	

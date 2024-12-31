@@ -3,7 +3,7 @@ CC	= gcc
 CXX	= g++
 CFLAGS	= -Wall -g
 
-PROGS	= dup tmpnam ioctl uid vbuf large lchmod share1 share2 share3 setvbuf1 setvbuf2
+PROGS	= dup tmpnam ioctl uid vbuf large lchmod share1 share2 share3 setvbuf1 setvbuf2 race1 race2
 
 all: $(PROGS)
 

@@ -58,7 +58,7 @@ int	pause() {
 }
 
 int	nanosleep(struct timespec *rqtp, struct timespec *rmtp) {
-	long ret = nanosleep(rqtp, rmtp);
+	long ret = sys_nanosleep(rqtp, rmtp);
 	WRAPPER_RETval(int);
 }
 
@@ -144,7 +144,7 @@ uid_t	getuid() {
 
 gid_t	getgid() {
 	long ret = sys_getgid();
-	WRAPPER_RETval(uid_t);
+	WRAPPER_RETval(gid_t);
 }
 
 int	setuid(uid_t uid) {

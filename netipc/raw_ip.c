@@ -13,6 +13,9 @@ int main() {
 	struct sockaddr_in sin;
 	socklen_t sinlen;
 
+	printf("This example does not work, because RAW socket does not allow\n"
+	       "receiving of any protocol messages. Use PACKET socket instead.\n");
+
 	/* a bad example: received nothing */
 	s = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
 	if(s < 0) {

@@ -8,11 +8,11 @@ ASM64	= yasm -f elf64 -DYASM -D__x86_64__ -DPIC
 
 CFLAGS	= -g -Wall -masm=intel -fno-stack-protector
 
-PROGS	= fun1 fun2 hello_sys hello_libc2 swap swap1 swap2 swap3 minimal \
+PROGS	= fun1 fun2 hello_sys hello_libc2 swap swap1 swap2 swap3 \
 	  dup2 frame_x64 frame_x86 conv_x86 conv_x86.s \
 	  hello_x86 hello_x64 libme.so callext \
 	  libasm64.a testasm_x64 testlink_x64 \
-	  libmini64.a libmini64.so testmini_x64 cat1 cat1s
+	  libmini64.a libmini64.so testmini_x64 cat1 cat1s errno
 
 all: $(PROGS)
 
@@ -78,6 +78,9 @@ callext: callext.c libme.so
 hello_libc2: hello_libc.o
 	$(CC) -o $@ $^
 
+hello_libc3: hello_libc.o
+	ld -m elf_x86_64 -o $@ -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now /usr/lib/x86_64-linux-gnu/Scrt1.o /usr/lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/?/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/?/crtendS.o /usr/lib/x86_64-linux-gnu/crtn.o $^ -L/lib -L/lib/x86_64-linux-gnu -L$(shell echo /usr/lib/gcc/x86_64-linux-gnu/?) -lc -lgcc
+
 libasm64.a: libasm64.asm
 	$(ASM64) $< -o libasm64.o
 	ar rc libasm64.a libasm64.o
@@ -104,6 +107,9 @@ cat1: cat1.o libmini64.a start.o
 	ld -m elf_x86_64 -o $@ $^
 
 cat1s: start.o cat1.o
+	ld -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
+
+errno: start.o errno.o
 	ld -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
 
 clean:
