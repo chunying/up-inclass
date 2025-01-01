@@ -11,7 +11,7 @@ LDL	=
 endif
 
 PROGS	= guess h1 getuid got got2 inject1.so inject2.so inject3.so random.so segment setjmp libc_dlopen find_dlopen doublefree1 doublefree2 \
-	  freehook
+	  mallochook freehook
 
 ifneq ($(SYS),Darwin)	# apple does not support static linkage ...
 PROGS	+= h2 getuid_s
