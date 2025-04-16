@@ -236,4 +236,8 @@ size_t strlen(const char *s);
 void perror(const char *prefix);
 unsigned int sleep(unsigned int s);
 
+int write_hex(long long value);
+int write_int(long long value);
+int write_str(const char *s);
+
 #endif	/* __LIBMINI_H__ */

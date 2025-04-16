@@ -18,7 +18,8 @@ PROGS	= fun1 fun2 hello_sys hello_libc2 swap swap1 swap2 swap3 \
 	  dup2 frame_x64 frame_x86 conv_x86 conv_x86.s \
 	  hello_x86 hello_x64 libme.so callext \
 	  libasm64.a testasm_x64 testlink_x64 \
-	  libmini64.a libmini64.so testmini_x64 cat1 cat1s errno
+	  libmini64.a libmini64.so testmini_x64 cat1 cat1s errno \
+	  disp
 
 all: $(PROGS)
 
@@ -104,19 +105,22 @@ libmini64.a: libmini64.asm libmini.c
 	ar rc libmini64.a libmini64.o libmini.o
 
 libmini64.so: libmini64.a
-	$(LD64) -shared libmini64.o libmini.o -o libmini64.so
+	$(LD64) -z noexecstack -shared libmini64.o libmini.o -o libmini64.so
 
 testmini_x64: testmini.o start.o
-	$(LD64) -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
+	$(LD64) -z noexecstack -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
 
 cat1: cat1.o libmini64.a start.o
-	$(LD64) -m elf_x86_64 -o $@ $^
+	$(LD64) -z noexecstack -m elf_x86_64 -o $@ $^
 
 cat1s: start.o cat1.o
-	$(LD64) -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
+	$(LD64) -z noexecstack -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
 
 errno: start.o errno.o
-	$(LD64) -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
+	$(LD64) -z noexecstack -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
+
+disp: start.o disp.o
+	$(LD64) -z noexecstack -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ $^ -L. -lmini64
 
 clean:
 	rm -f a.out *.o $(PROGS) peda-*

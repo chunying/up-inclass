@@ -232,6 +232,51 @@ void perror(const char *prefix) {
 	return;
 }
 
+int write_hex(long long value) {
+	static const char digit[] = "0123456789abcdef";
+	char buf[256], *wptr = &buf[sizeof(buf)-1];
+	int count = 0;
+	while(value != 0) {
+		count++;
+		*wptr-- = digit[value & 0x0f];
+		value >>= 4;
+	}
+	if(count == 0) {
+		count++;
+		*wptr-- = '0';
+	}
+	return sys_write(1, wptr+1, count);
+}
+
+int write_int(long long value) {
+	int negative = (value >= 0 ? 0 : 1);
+	char buf[256], *wptr = &buf[sizeof(buf)-1];
+	int count = 0;
+	if(value < 0) value = -value;
+	while(value > 0) {
+		count++;
+		*wptr-- = '0' + (value % 10);
+		value /= 10;
+	}
+	if(count == 0) {
+		count++;
+		*wptr-- = '0';
+	}
+	if(negative) {
+		*wptr-- = '-';
+		count++;
+	}
+	return sys_write(1, wptr+1, count);
+}
+
+int write_str(const char *s) {
+	int i;
+	if(s == NULL) return 0;
+	for(i = 0; s[i] != '\0'; i++);
+	if(i > 0) return sys_write(1, s, i);
+	return 0;
+}
+
 #if 0	/* we have an equivalent implementation in assembly */
 unsigned int sleep(unsigned int seconds) {
 	long ret;
