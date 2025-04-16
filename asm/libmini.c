@@ -232,7 +232,7 @@ void perror(const char *prefix) {
 	return;
 }
 
-int write_hex(long long value) {
+int write_hex(unsigned long long value) {
 	static const char digit[] = "0123456789abcdef";
 	char buf[256], *wptr = &buf[sizeof(buf)-1];
 	int count = 0;

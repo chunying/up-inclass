@@ -8,6 +8,10 @@ int main() {
 	write_str(" ");
 	write_hex(tv.tv_sec);
 	write_str("\n");
+
+	write_hex(sizeof(long long)); write_str(" ");
+	write_hex(-1); write_str("\n");
+
 	return 0;
 }
 
