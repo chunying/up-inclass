@@ -240,4 +240,6 @@ int write_hex(long long value);
 int write_int(long long value);
 int write_str(const char *s);
 
+#include "libmini-ext.h"
+
 #endif	/* __LIBMINI_H__ */
