@@ -31,3 +31,9 @@ extern sys_setuid
 extern sys_setgid
 extern sys_geteuid
 extern sys_getegid
+
+extern sys_rt_sigaction
+extern sys_rt_sigprocmask
+extern sys_rt_sigreturn
+extern sys_rt_sigpending
+extern sys_rt_sigsuspend
