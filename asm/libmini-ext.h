@@ -1,6 +1,12 @@
 #ifndef __LIBMINI_EXT_H__
 #define __LIBMINI_EXT_H__
 
+time_t time(time_t * unused);
+
+void srand(unsigned int seed);
+unsigned int grand();
+int rand();
+
 /* from /usr/include/asm-generic/signal-defs.h */
 #define SIG_DFL	((sighandler_t) 0)	/* default signal handling */
 #define SIG_IGN	((sighandler_t) 1)	/* ignore signal */

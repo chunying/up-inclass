@@ -4,6 +4,7 @@
 typedef long long size_t;
 typedef long long ssize_t;
 typedef long long off_t;
+typedef long time_t;
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
