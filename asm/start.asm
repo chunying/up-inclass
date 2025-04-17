@@ -6,7 +6,7 @@ extern exit
 _start:
 	mov	rdi, [rsp]	; argc
 	lea	rsi, [rsp+8]	; argv
-	call	main
+	call	main wrt ..plt
 	mov	rdi, rax	; exit code
-	call	exit
+	call	exit wrt ..plt
 	ret
